@@ -137,10 +137,3 @@ rm klayout_0.30.3-1_amd64.deb
 
 ---
 
-## 3. Observações finais
-- Certifique-se de reiniciar o terminal após a instalação para aplicar as variáveis de ambiente.
-- Alguns pacotes podem mudar de nome ou exigir ajustes conforme a versão do Ubuntu.
-- Se estiver usando WSL, ative o suporte a gráficos no Windows (`wsl --install` já habilita no Windows 11).
-
----
-
