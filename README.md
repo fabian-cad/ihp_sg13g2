@@ -129,7 +129,7 @@ rm klayout_0.30.3-1_amd64.deb
 ```
 > **Para abrir o KLayout:**
 > ```bash
-> klayout -e
+> klayout -e &
 > ```
 
 ---
