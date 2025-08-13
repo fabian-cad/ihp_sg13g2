@@ -1,8 +1,7 @@
 # Tutorial de instalação do PDK IHP 130 nm no Ubuntu 24.04
-**Autor:** Prof. Fabián Olivera  
-**Data:** 13 de agosto de 2025  
+** Autor:** Prof. Fabián Olivera  
+** Data:** 13 de agosto de 2025  
 Este tutorial foi testado no **Ubuntu 24.04 (na WSL)** desde o primeiro acesso como usuário com permissões de `sudo`. Ele deveria funcionar também no **Ubuntu nativo** ou em **máquinas virtuais Ubuntu** (VirtualBox, VMware), podendo haver a necessidade de instalar bibliotecas adicionais conforme versão do ambiente. No caso de não estar usando WSL, começar o tutorial no Passo 2.
----
 
 ## 1. Instalação da WSL e distribuição Ubuntu
 No **PowerShell** do Windows, instale o Ubuntu 24.04 na WSL 2:
