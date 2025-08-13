@@ -48,12 +48,10 @@ cd ~/cad
 git clone --recursive https://github.com/IHP-GmbH/IHP-Open-PDK.git
 cd IHP-Open-PDK
 git checkout dev
-
 echo "export PDK_ROOT=\$HOME/cad/IHP-Open-PDK" >> ~/.bashrc
 echo "export PDK=ihp-sg13g2" >> ~/.bashrc
 echo "export KLAYOUT_PATH=\"\$HOME/.klayout:\$PDK_ROOT/\$PDK/libs.tech/klayout\"" >> ~/.bashrc
 echo "export KLAYOUT_HOME=\$HOME/.klayout" >> ~/.bashrc
-
 source ~/.bashrc
 ```
 
@@ -79,16 +77,17 @@ cd xschem
 ./configure --prefix=/usr/local
 make
 sudo make install
-
 cd $PDK_ROOT/ihp-sg13g2/libs.tech/xschem/
 python3 install.py
-
 cd ~/cad
 rm -rf xschem
 mkdir -p ~/.xschem
 cp $PDK_ROOT/$PDK/libs.tech/xschem/xschemrc ~/.xschem/xschemrc
 ```
-
+> **Para abrir o Xschem:**
+> ```bash
+> xschem &
+> ```
 ---
 
 ### 2.5 Instalação do **Ngspice**
@@ -100,7 +99,6 @@ cd ngspice
 ./configure --enable-osdi --prefix=/usr/local
 make
 sudo make install
-
 cd ..
 rm -rf ngspice
 ```
@@ -115,11 +113,10 @@ cd magic
 ./configure --prefix=/usr/local
 make
 sudo make install
-
 cd ..
 rm -rf magic
 ```
-> **Abrir o Magic:**
+> **Para abrir o Magic:**
 > ```bash
 > magic -rcfile $PDK_ROOT/$PDK/libs.tech/magic/$PDK.magicrc &
 > ```
@@ -133,7 +130,7 @@ wget https://www.klayout.org/downloads/Ubuntu-24/klayout_0.30.3-1_amd64.deb
 sudo dpkg -i klayout_0.30.3-1_amd64.deb
 rm klayout_0.30.3-1_amd64.deb
 ```
-> **Abrir o KLayout:**
+> **Para abrir o KLayout:**
 > ```bash
 > klayout -e
 > ```
