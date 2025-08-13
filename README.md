@@ -3,8 +3,8 @@
 **Data:** 13 de agosto de 2025  
 
 Este tutorial foi testado no **Ubuntu 24.04 (na WSL)** desde o primeiro acesso como usuário com permissões de `sudo`.  
-Ele deve funcionar também no **Windows com WSL**, no **Ubuntu nativo** ou em **máquinas virtuais** (VirtualBox, VMware), podendo haver a necessidade de instalar bibliotecas adicionais conforme o ambiente.
-
+Ele deveria funcionar também no **Ubuntu nativo** ou em **máquinas virtuais Ubuntu** (VirtualBox, VMware), podendo haver a necessidade de instalar bibliotecas adicionais conforme versão do ambiente.
+Caso não estiver usando WSL, poderá começar o tutorial no Passo 2.
 ---
 
 ## 1. Instalação da WSL e distribuição Ubuntu
