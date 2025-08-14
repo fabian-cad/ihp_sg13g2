@@ -31,7 +31,7 @@ sudo apt install -y gedit build-essential flex bison libx11-dev \
 libxpm-dev libxext-dev libxft-dev tcl-dev tk-dev autoconf libtool \
 libxaw7-dev libreadline-dev xterm libqt5designer5 libqt5multimedia5 \
 libqt5opengl5t64 libqt5multimediawidgets5 libqt5printsupport5t64 \
-libqt5sql5t64 libqt5xmlpatterns5 ruby ruby-dev libgit2-dev python3-venv
+libqt5sql5t64 libqt5xmlpatterns5 ruby ruby-dev libgit2-dev python3-venv vim-gtk3
 ```
 Prepara ambiente Python virtual para ferramentas
 ```bash
