@@ -31,7 +31,15 @@ sudo apt install -y gedit build-essential flex bison libx11-dev \
 libxpm-dev libxext-dev libxft-dev tcl-dev tk-dev autoconf libtool \
 libxaw7-dev libreadline-dev xterm libqt5designer5 libqt5multimedia5 \
 libqt5opengl5t64 libqt5multimediawidgets5 libqt5printsupport5t64 \
-libqt5sql5t64 libqt5xmlpatterns5 ruby ruby-dev libgit2-dev python3-psutil
+libqt5sql5t64 libqt5xmlpatterns5 ruby ruby-dev libgit2-dev python3-venv
+# Prepara ambiente python virtual para ferramentas
+python3 -m venv $HOME/.venv
+echo "if [ -f "$HOME/.venv/bin/activate" ]; then" >> ~/.bashrc
+echo "source "$HOME/.venv/bin/activate"" >> ~/.bashrc
+echo "fi" >> ~/.bashrc
+source ~/.bashrc
+pip install --upgrade pip
+pip install psutil
 ```
 
 Crie o diretório para as ferramentas de microeletrônica:
