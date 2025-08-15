@@ -156,6 +156,10 @@ cd ~/cad
 wget -O vscode.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64'
 sudo dpkg -i vscode.deb
 rm vscode.deb
+echo "# Forçar uso da versão Linux do VS Code no WSL" >> ~/.bashrc
+echo "alias code='/usr/bin/code'" >> ~/.bashrc
+echo "export DONT_PROMPT_WSL_INSTALL=1" >> ~/.bashrc
+source ~/.bashrc
 ```
 > **Para abrir o Visual Studio Code:**
 > ```bash
