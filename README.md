@@ -36,6 +36,8 @@ libqt5sql5t64 libqt5xmlpatterns5 ruby ruby-dev libgit2-dev python3-venv vim-gtk3
 Prepara ambiente Python virtual para ferramentas
 ```bash
 python3 -m venv $HOME/.venv
+echo "# Ambiente virtual Python ativado por padrão" >> ~/.bashrc
+echo "# para desativar, executar comando 'deactivate'" >> ~/.bashrc
 echo "if [ -f "$HOME/.venv/bin/activate" ]; then" >> ~/.bashrc
 echo "source "$HOME/.venv/bin/activate"" >> ~/.bashrc
 echo "fi" >> ~/.bashrc
