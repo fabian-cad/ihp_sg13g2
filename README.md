@@ -31,7 +31,8 @@ sudo apt install -y gedit build-essential flex bison libx11-dev \
 libxpm-dev libxext-dev libxft-dev tcl-dev tk-dev autoconf libtool \
 libxaw7-dev libreadline-dev xterm libqt5designer5 libqt5multimedia5 \
 libqt5opengl5t64 libqt5multimediawidgets5 libqt5printsupport5t64 \
-libqt5sql5t64 libqt5xmlpatterns5 ruby ruby-dev libgit2-dev python3-venv vim-gtk3
+libqt5sql5t64 libqt5xmlpatterns5 ruby ruby-dev libgit2-dev python3-venv \
+python3-tk vim-gtk3
 ```
 Prepara ambiente Python virtual para ferramentas
 ```bash
@@ -44,6 +45,8 @@ echo "fi" >> ~/.bashrc
 source ~/.bashrc
 pip install --upgrade pip
 pip install psutil
+pip install matplotlib
+pip install numpy
 ```
 Crie o diretório para as ferramentas de microeletrônica:
 ```bash
