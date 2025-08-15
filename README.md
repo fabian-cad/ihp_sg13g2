@@ -152,20 +152,19 @@ rm klayout_0.30.3-1_amd64.deb
 
 ### 3.1 Instalação do **Visual Studio Code**
 Vscode pode ser utilizado para implementar scripts de projeto e otimização de circuitos
-microeletrônicos. No terminal, execute os seguintes comando para instalar a última versão
+microeletrônicos. Se estiver usando WSL é recomendável instalar o VSCode no Windows, a 
+WSL reconhecerá o comando 'code'. Se estiver usando Ubuntu nativo ou maquinas virtuais, 
+execute os seguintes comando para instalar a última versão do VSCode.
 do vscode.
 ```bash
 cd ~/cad
 wget -O vscode.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64'
 sudo dpkg -i vscode.deb
 rm vscode.deb
-echo "# Forçar uso da versão Linux do VS Code no WSL" >> ~/.bashrc
-echo "alias code='/usr/bin/code'" >> ~/.bashrc
-echo "export DONT_PROMPT_WSL_INSTALL=1" >> ~/.bashrc
-source ~/.bashrc
 ```
-> **Para abrir o Visual Studio Code:**
+> **Abrir o Visual Studio Code**
+> Na pasta de trabalho, execute o seguinte comando:
 > ```bash
-> code &
+> code . &
 > ```
 
