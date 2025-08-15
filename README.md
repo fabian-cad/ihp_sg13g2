@@ -56,6 +56,7 @@ cd ~/cad
 git clone --recursive https://github.com/IHP-GmbH/IHP-Open-PDK.git
 cd IHP-Open-PDK
 git checkout dev
+echo "# Configuração do IHP-Open-PDK" >> ~/.bashrc
 echo "export PDK_ROOT=\$HOME/cad/IHP-Open-PDK" >> ~/.bashrc
 echo "export PDK=ihp-sg13g2" >> ~/.bashrc
 echo "export KLAYOUT_PATH=\"\$HOME/.klayout:\$PDK_ROOT/\$PDK/libs.tech/klayout\"" >> ~/.bashrc
