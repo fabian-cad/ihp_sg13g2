@@ -145,3 +145,20 @@ rm klayout_0.30.3-1_amd64.deb
 
 ---
 
+## 3. Instalação de ferramentas complementares
+
+### 3.1 Instalação do **Visual Studio Code**
+Vscode pode ser utilizado para implementar scripts de projeto e otimização de circuitos
+microeletrônicos. No terminal, execute os seguintes comando para instalar a última versão
+do vscode.
+```bash
+cd ~/cad
+wget -O vscode.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64'
+sudo dpkg -i vscode.deb
+rm vscode.deb
+```
+> **Para abrir o Visual Studio Code:**
+> ```bash
+> code &
+> ```
+
