@@ -137,7 +137,21 @@ rm -rf magic
 
 ---
 
-### 2.7 Instalação do **KLayout**
+### 2.7 Instalação do **Netgen**
+```bash
+cd ~/cad
+git clone git://opencircuitdesign.com/netgen
+cd netgen
+./configure --prefix=/usr/local
+make
+sudo make install
+cd ..
+rm -rf netgen
+```
+
+---
+
+### 2.8 Instalação do **KLayout**
 ```bash
 cd ~/cad
 wget https://www.klayout.org/downloads/Ubuntu-24/klayout_0.30.3-1_amd64.deb
