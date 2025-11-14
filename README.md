@@ -166,10 +166,11 @@ rm klayout_0.30.3-1_amd64.deb
 ---
 
 ## 3. Instalação de ferramentas complementares
-
-### 3.1 Instalação do **Visual Studio Code**
+### 3.1 Instalação do **Visual Studio Code** na WSL
 O VSCode pode ser utilizado para implementar scripts de projeto e otimização de circuitos microeletrônicos. 
-Se estiver usando WSL, é recomendável instalar o VSCode no Windows, pois a WSL reconhecerá o comando **code**. 
+Se estiver usando WSL, é recomendável instalar o VSCode no Windows, junto com a seguinte extensão:
+https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl
+### 3.2 Instalação do **Visual Studio Code** em Ubuntu nativo
 Se estiver usando Ubuntu nativo ou máquinas virtuais, execute os seguintes comandos para instalar a versão 
 mais recente do VSCode.
 ```bash
@@ -178,7 +179,7 @@ wget -O vscode.deb 'https://code.visualstudio.com/sha/download?build=stable&os=l
 sudo dpkg -i vscode.deb
 rm vscode.deb
 ```
-> **Abrir o Visual Studio Code**
+### 3.3 Abrir o Visual Studio Code
 > Na pasta de trabalho, execute o seguinte comando:
 > ```bash
 > code . &
