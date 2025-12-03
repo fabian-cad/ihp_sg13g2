@@ -177,6 +177,7 @@ mais recente do VSCode.
 cd ~/cad
 wget -O vscode.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64'
 sudo dpkg -i vscode.deb
+sudo apt --fix-broken install
 rm vscode.deb
 ```
 ### 3.3 Abrir o Visual Studio Code
