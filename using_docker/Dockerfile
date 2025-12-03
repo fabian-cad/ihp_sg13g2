@@ -84,7 +84,7 @@ RUN export USER=caduser \
 && git clone https://git.code.sf.net/p/ngspice/ngspice ngspice \
 && cd ngspice \
 && ./autogen.sh \
-&& ./configure --enable-osdi --prefix=/usr/local \
+&& ./configure --enable-osdi --enable-pss --prefix=/usr/local \
 && make \
 && sudo make install \
 && cd .. \
@@ -131,6 +131,7 @@ EXPOSE 22
 
 #SSH service at the start-up
 CMD ["/usr/sbin/sshd", "-D"]
+
 
 
 
