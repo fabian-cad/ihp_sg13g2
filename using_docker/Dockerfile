@@ -41,9 +41,8 @@ RUN mkdir ~/cad
 
 #Installing and configuring the IHP 130 nm PDK
 RUN cd ~/cad \
-&& git clone --recursive https://github.com/IHP-GmbH/IHP-Open-PDK.git \
+&& git clone --branch dev --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git \
 && cd IHP-Open-PDK \
-&& git checkout dev \
 && echo "# Configuração do IHP-Open-PDK" >> ~/.bashrc \
 && echo "export PDK_ROOT=\$HOME/cad/IHP-Open-PDK" >> ~/.bashrc \
 && echo "export PDK=ihp-sg13g2" >> ~/.bashrc \
@@ -131,6 +130,7 @@ EXPOSE 22
 
 #SSH service at the start-up
 CMD ["/usr/sbin/sshd", "-D"]
+
 
 
 
