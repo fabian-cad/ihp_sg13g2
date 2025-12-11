@@ -58,9 +58,8 @@ mkdir ~/cad
 ### 2.2 Instalação e configuração do **PDK IHP 130 nm**
 ```bash
 cd ~/cad
-git clone --recursive https://github.com/IHP-GmbH/IHP-Open-PDK.git
+git clone --branch dev --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git
 cd IHP-Open-PDK
-git checkout dev
 echo "# Configuração do IHP-Open-PDK" >> ~/.bashrc
 echo "export PDK_ROOT=\$HOME/cad/IHP-Open-PDK" >> ~/.bashrc
 echo "export PDK=ihp-sg13g2" >> ~/.bashrc
