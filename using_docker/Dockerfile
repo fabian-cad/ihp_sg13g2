@@ -41,8 +41,9 @@ RUN mkdir ~/cad
 
 #Installing and configuring the IHP 130 nm PDK
 RUN cd ~/cad \
-&& git clone --branch dev --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git \
+&& git clone --recursive https://github.com/IHP-GmbH/IHP-Open-PDK.git \
 && cd IHP-Open-PDK \
+&& git checkout dev \
 && echo "# Configuração do IHP-Open-PDK" >> ~/.bashrc \
 && echo "export PDK_ROOT=\$HOME/cad/IHP-Open-PDK" >> ~/.bashrc \
 && echo "export PDK=ihp-sg13g2" >> ~/.bashrc \
@@ -83,7 +84,7 @@ RUN export USER=caduser \
 && git clone https://git.code.sf.net/p/ngspice/ngspice ngspice \
 && cd ngspice \
 && ./autogen.sh \
-&& ./configure --enable-osdi --enable-pss --prefix=/usr/local \
+&& ./configure --enable-osdi --prefix=/usr/local \
 && make \
 && sudo make install \
 && cd .. \
@@ -101,9 +102,9 @@ RUN cd ~/cad \
 
 #KLayout
 RUN cd ~/cad \
-&& wget https://www.klayout.org/downloads/Ubuntu-24/klayout_0.30.3-1_amd64.deb \
-&& sudo dpkg -i klayout_0.30.3-1_amd64.deb \
-&& rm klayout_0.30.3-1_amd64.deb
+&& wget https://www.klayout.org/downloads/Ubuntu-24/klayout_0.30.7-1_amd64.deb \
+&& sudo dpkg -i klayout_0.30.7-1_amd64.deb \
+&& rm klayout_0.30.7-1_amd64.deb
 
 #Netgen
 RUN cd ~/cad \
@@ -130,8 +131,3 @@ EXPOSE 22
 
 #SSH service at the start-up
 CMD ["/usr/sbin/sshd", "-D"]
-
-
-
-
-
