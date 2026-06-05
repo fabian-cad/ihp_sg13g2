@@ -16,7 +16,7 @@ ARG USER_PASS=admin123
 ARG WORK_FOLDER_NAME=cad
 
 # Tool versions
-ARG KLAYOUT_VERSION=0.30.9-1
+ARG KLAYOUT_VERSION=0.30.9
 ARG OPENVAF_VERSION=23_5_0
 ARG NGSPICE_BRANCH=ngspice-46
 
@@ -140,9 +140,10 @@ RUN cd ~/${WORK_FOLDER_NAME} \
 
 # KLayout
 RUN cd ~/${WORK_FOLDER_NAME} \
-&& wget https://www.klayout.org/downloads/Ubuntu-24/klayout_${KLAYOUT_VERSION}_amd64.deb \
-&& sudo dpkg -i klayout_${KLAYOUT_VERSION}_amd64.deb \
-&& rm klayout_${KLAYOUT_VERSION}_amd64.deb
+&& wget https://www.klayout.org/downloads/Ubuntu-24/klayout_${KLAYOUT_VERSION}-1_amd64.deb \
+&& sudo dpkg -i klayout_${KLAYOUT_VERSION}-1_amd64.deb \
+&& rm klayout_${KLAYOUT_VERSION}-1_amd64.deb \
+&& sudo pip install klayout==${KLAYOUT_VERSION} --break-system-packages
 
 # Netgen
 RUN cd ~/${WORK_FOLDER_NAME} \
