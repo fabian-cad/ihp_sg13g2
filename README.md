@@ -1,187 +1,73 @@
-# Tutorial de instalação do PDK IHP 130 nm no Ubuntu 24.04
-**Autor:** Prof. Fabián Olivera  
+# IHP 130 nm on Ubuntu 24.04 Docker Container
 
-Este tutorial foi testado no **Ubuntu 24.04 (na [WSL](https://learn.microsoft.com/pt-br/windows/wsl/))** desde o primeiro acesso como usuário com permissões de `sudo`. Ele deveria funcionar também no **Ubuntu nativo** ou em **máquinas virtuais Ubuntu** (VirtualBox, VMware), podendo haver a necessidade de instalar bibliotecas adicionais conforme versão do ambiente. No caso de não estar usando WSL, começar o tutorial no Passo 2.
-
-## 1. Instalação da WSL e distribuição Ubuntu
-No **PowerShell** do Windows, instale o Ubuntu 24.04 na WSL 2:
-
-```powershell
-wsl --install -d Ubuntu-24.04
-```
-
-Durante a instalação, será solicitado criar **nome de usuário** e **senha** no Linux.  
-
-Para abrir o Ubuntu diretamente no **home** do usuário:
-
-```powershell
-wsl ~ -d Ubuntu-24.04
-```
+**Author:** Professor Fabián Olivera, COPPE/UFRJ  
+**Date:** June 3, 2026
 
 ---
 
-## 2. Instalação das ferramentas dentro do Ubuntu
+## 1. Install Docker
 
-Agora dentro do Ubuntu (WSL, nativo ou VM), execute os comandos abaixo.
+Install Docker according to your operating system and distribution.
 
-### 2.1 Atualização e instalação de dependências
-```bash
-sudo apt update
-sudo apt install -y gedit build-essential flex bison libx11-dev \
-libxpm-dev libxext-dev libxft-dev tcl-dev tk-dev autoconf libtool \
-libxaw7-dev libreadline-dev xterm libqt5designer5 libqt5multimedia5 \
-libqt5opengl5t64 libqt5multimediawidgets5 libqt5printsupport5t64 \
-libqt5sql5t64 libqt5xmlpatterns5 ruby ruby-dev libgit2-dev python3-venv \
-python3-tk vim-gtk3
-```
-Prepara ambiente Python virtual para ferramentas
-```bash
-python3 -m venv $HOME/.venv
-echo "# Ambiente virtual Python ativado por padrão" >> ~/.bashrc
-echo "# para desativar, executar comando 'deactivate'" >> ~/.bashrc
-echo "if [ -f "$HOME/.venv/bin/activate" ]; then" >> ~/.bashrc
-echo "source "$HOME/.venv/bin/activate"" >> ~/.bashrc
-echo "fi" >> ~/.bashrc
-source ~/.bashrc
-pip install --upgrade pip
-pip install psutil
-pip install matplotlib
-pip install numpy
-```
-Crie o diretório para as ferramentas de microeletrônica:
-```bash
-mkdir ~/cad
-```
+Official Docker documentation:
+
+https://docs.docker.com/engine/install/
 
 ---
 
-### 2.2 Instalação e configuração do **PDK IHP 130 nm**
+## 2. Build the Docker Image
+
+Navigate to the directory containing the `Dockerfile` and execute:
+
 ```bash
-cd ~/cad
-git clone --branch dev --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git
-cd IHP-Open-PDK
-echo "# Configuração do IHP-Open-PDK" >> ~/.bashrc
-echo "export PDK_ROOT=\$HOME/cad/IHP-Open-PDK" >> ~/.bashrc
-echo "export PDK=ihp-sg13g2" >> ~/.bashrc
-echo "export KLAYOUT_PATH=\"\$HOME/.klayout:\$PDK_ROOT/\$PDK/libs.tech/klayout\"" >> ~/.bashrc
-echo "export KLAYOUT_HOME=\$HOME/.klayout" >> ~/.bashrc
-source ~/.bashrc
+docker build -t cad_ihp130_ubuntu_image:latest .
 ```
+
+This command builds the Docker image and assigns it the tag
+`cad_ihp130_ubuntu_image:latest`.
 
 ---
 
-### 2.3 Instalação do **OpenVAF**
+## 3. Start a Container
+
+Create and start a container from the previously built image:
+
 ```bash
-cd ~/cad
-wget https://openva.fra1.cdn.digitaloceanspaces.com/openvaf_23_5_0_linux_amd64.tar.gz
-tar -xzf openvaf_23_5_0_linux_amd64.tar.gz
-sudo mv openvaf /usr/local/bin/
-sudo chmod +x /usr/local/bin/openvaf
-rm openvaf_23_5_0_linux_amd64.tar.gz
+docker run --privileged --name cad_ihp130_container --hostname <hostname> -d -p <host_port>:22 --restart unless-stopped cad_ihp130_ubuntu_image:latest
 ```
+
+Replace `<host_port>` with the port number that will be used for SSH access to the container.
+Replace `<hostname>` with a hostname for the container.
 
 ---
 
-### 2.4 Instalação do **Xschem**
-```bash
-cd ~/cad
-git clone https://github.com/StefanSchippers/xschem.git
-cd xschem
-./configure --prefix=/usr/local
-make
-sudo make install
-cd $PDK_ROOT/ihp-sg13g2/libs.tech/xschem/
-python3 install.py
-cd ~/cad
-rm -rf xschem
-mkdir -p ~/.xschem
-cp $PDK_ROOT/$PDK/libs.tech/xschem/xschemrc ~/.xschem/xschemrc
-```
-> **Para abrir o Xschem:**
-> ```bash
-> xschem &
-> ```
----
+## 4. Connect to the Container via SSH with X11 Forwarding
 
-### 2.5 Instalação do **Ngspice**
+Connect to the container using SSH with X11 forwarding enabled:
+
 ```bash
-cd ~/cad
-git clone https://git.code.sf.net/p/ngspice/ngspice ngspice
-cd ngspice
-./autogen.sh
-./configure --enable-osdi --enable-pss --prefix=/usr/local
-make
-sudo make install
-cd ..
-rm -rf ngspice
+ssh -YC <user>@<hostname> -p <host_port>
 ```
+
+### Example
+
+```bash
+ssh -YC student01@localhost -p 5022
+```
+
+### Notes
+
+- Ensure that the selected `<host_port>` is open in the host firewall, if applicable.
+- The users `<user>` and `root` share the same password, which is defined in the `Dockerfile` before the image is built.
+- The `-Y` option enables trusted X11 forwarding.
+- The `-C` option enables SSH compression, which may improve performance when forwarding graphical applications. 
+- Use `localhost` as the hostname when the SSH client is running on the same host as the Docker
 
 ---
 
-### 2.6 Instalação do **Magic**
-```bash
-cd ~/cad
-git clone git://opencircuitdesign.com/magic
-cd magic
-./configure --prefix=/usr/local
-make
-sudo make install
-cd ..
-rm -rf magic
-```
-> **Para abrir o Magic:**
-> ```bash
-> magic -rcfile $PDK_ROOT/$PDK/libs.tech/magic/$PDK.magicrc &
-> ```
+## Summary
 
----
-
-### 2.7 Instalação do **Netgen**
-```bash
-cd ~/cad
-git clone git://opencircuitdesign.com/netgen
-cd netgen
-./configure --prefix=/usr/local
-make
-sudo make install
-cd ..
-rm -rf netgen
-```
-
----
-
-### 2.8 Instalação do **KLayout**
-```bash
-cd ~/cad
-wget https://www.klayout.org/downloads/Ubuntu-24/klayout_0.30.3-1_amd64.deb
-sudo dpkg -i klayout_0.30.3-1_amd64.deb
-rm klayout_0.30.3-1_amd64.deb
-```
-> **Para abrir o KLayout:**
-> ```bash
-> klayout -e &
-> ```
-
----
-
-## 3. Instalação de ferramentas complementares
-### 3.1 Instalação do **Visual Studio Code** na WSL
-O VSCode pode ser utilizado para implementar scripts de projeto e otimização de circuitos microeletrônicos. 
-Se estiver usando WSL, é recomendável instalar o VSCode no Windows, junto com a seguinte extensão:
-https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl
-### 3.2 Instalação do **Visual Studio Code** em Ubuntu nativo
-Se estiver usando Ubuntu nativo ou máquinas virtuais, execute os seguintes comandos para instalar a versão 
-mais recente do VSCode.
-```bash
-cd ~/cad
-wget -O vscode.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64'
-sudo dpkg -i vscode.deb
-sudo apt --fix-broken install
-rm vscode.deb
-```
-### 3.3 Abrir o Visual Studio Code
-> Na pasta de trabalho, execute o seguinte comando:
-> ```bash
-> code . &
-> ```
-
+1. Install Docker.
+2. Build the image using `docker build`.
+3. Start the container using `docker run`.
+4. Connect through SSH with X11 forwarding enabled.
