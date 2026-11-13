@@ -9,16 +9,17 @@
 
 # Using ubuntu 24.04
 FROM ubuntu:24.04
-
 # User configurations
 ARG USER_NAME=student01
 ARG USER_PASS=admin123
 ARG WORK_FOLDER_NAME=cad
 
 # Tool versions
-ARG KLAYOUT_VERSION=0.30.9
+#verify klayout version on ihp130: https://github.com/IHP-GmbH/IHP-Open-PDK/blob/main/requirements.txt
+ARG KLAYOUT_VERSION=0.30.5
+#verify ngspice stable branch on https://sourceforge.net/p/ngspice/
+ARG NGSPICE_BRANCH=ngspice-47
 ARG OPENVAF_VERSION=23_5_0
-ARG NGSPICE_BRANCH=ngspice-46
 
 # Update and dependency installation
 RUN apt update
@@ -61,15 +62,30 @@ RUN sudo apt install -y libsuitesparse-dev gfortran swig libspdlog-dev libeigen3
 RUN sudo apt install -y gedit libxext-dev libxft-dev tcl-dev tk-dev libqt5designer5 
 RUN sudo apt install -y libqt5multimedia5 libqt5opengl5t64 libqt5printsupport5t64 libqt5sql5t64 libqt5xmlpatterns5 
 RUN sudo apt install -y vim-gtk3 wget 
+RUN sudo apt install -y --no-install-recommends xz-utils ca-certificates
 
 USER root
-# Install needed python packages on system
-RUN apt-get install -y --no-install-recommends \
-python3-sphinx python3-sphinx-autoapi python3-pandas \
-python3-tk python3-pytest python3-psutil \
-python3-matplotlib python3-numpy \
-&& rm -rf /var/lib/apt/lists/*
 
+# Install needed python packages on system
+# some packages from IHP-Open-PDK/blob/main/requirements.txt
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3-pip \
+    python3-sphinx python3-sphinx-autoapi \
+    python3-tk python3-pytest python3-psutil \
+    python3-matplotlib python3-numpy \
+    python3-flake8 python3-docopt python3-yaml python3-pandas \
+    python3-tqdm python3-termcolor \
+ && rm -rf /var/lib/apt/lists/*
+RUN pip3 install --no-cache-dir --break-system-packages gdstk
+
+# RUN apt-get install -y --no-install-recommends \
+# python3-sphinx python3-sphinx-autoapi  \
+# python3-tk python3-pytest python3-psutil \
+# python3-matplotlib python3-numpy \
+# python3-flake8 python3-docopt python3-yaml python3-pandas \
+# python3-tqdm python3-termcolor
+# RUN rm -rf /var/lib/apt/lists/*
+# RUN pip3 install --no-cache-dir --break-system-packages gdstk
 
 USER ${USER_NAME}
 
@@ -154,6 +170,18 @@ RUN cd ~/${WORK_FOLDER_NAME} \
 && sudo make install \
 && cd .. \
 && rm -rf netgen
+
+# Librelane
+# Nix single-user (without systemd/daemon)
+RUN sudo mkdir -m 0755 /nix && sudo chown ${USER_NAME} /nix
+RUN curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
+RUN mkdir -p ~/.config/nix \
+ && printf '%s\n' \
+  'experimental-features = nix-command flakes' \
+  'extra-substituters = https://nix-cache.fossi-foundation.org' \
+  'extra-trusted-public-keys = nix-cache.fossi-foundation.org:3+K59iFwXqKsL7BNu6Guy0v+uTlwsxYQxjspXzqLYQs=' \
+  > ~/.config/nix/nix.conf
+RUN echo '. $HOME/.nix-profile/etc/profile.d/nix.sh' >> ~/.bashrc
 
 # SSH configuration
 USER root

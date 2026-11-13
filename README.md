@@ -1,7 +1,7 @@
 # IHP 130 nm on Ubuntu 24.04 Docker Container
 
-**Author:** Professor Fabián Olivera, COPPE/UFRJ  
-**Date:** June 3, 2026
+**Author:** Professor Fabián Olivera, PEE/COPPE/UFRJ  
+**Date:** Nov 13, 2026
 
 ---
 
